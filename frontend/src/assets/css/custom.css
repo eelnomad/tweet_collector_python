@@ -1,0 +1,9 @@
+.qs {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.fo {
+  font-family: 'Fredoka One', cursive;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Quicksand');

@@ -5,11 +5,12 @@ import backend.mongo_utils as mongo
 import backend.twitter_utils as twitter
 
 app = Flask(__name__,
-            static_folder = "frontend/dist/static",
-            template_folder = "frontend/dist")
+            static_folder="frontend/dist/static",
+            template_folder="frontend/dist")
 CORS(app)
 
 active_stream = None
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

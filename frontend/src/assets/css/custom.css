@@ -1,9 +1,25 @@
-.qs {
-  font-family: 'Quicksand', sans-serif;
+h1, h2, h3, h4, h5 {
+  font-weight: 400;
+  font-style: normal;
 }
 
+/*.qs {
+  font-family: 'Quicksand', sans-serif;
+}
 .fo {
   font-family: 'Fredoka One', cursive;
 }
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Quicksand');*/
+/*.ct {
+	font-family: 'Crimson Text', serif;
+}
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text&display=swap');*/
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Quicksand');
+
+.findme {
+  border-style: solid;
+}

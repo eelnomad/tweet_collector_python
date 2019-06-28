@@ -1,28 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Browse from '@/components/Browse'
-import Details from '@/components/Details'
-import Create from '@/components/Create'
+import Collection from '@/components/collections/Collection'
+import CollectionHome from '@/components/collections/Home'
+import CollectionCreate from '@/components/collections/Create'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
+  {
+    path: '*',
+    redirect: { name: 'Collections'}
+  },
+  {
+    path: '/collections',
+    desc: 'Collections',
+    component: Collection,
+    children: [
     {
-      path: '/',
-      name: 'Home',
-      component: Browse,
-      children: [
-        {
-          path: 'new',
-          component: Create
-        },
-        {
-          path: ':id',
-          name: 'Details',
-          component: Details
-        },
-      ]
-    }
+      path: 'new',
+      component: CollectionCreate
+    },
+    {
+      path: '',
+      name: 'Collections',
+      component: CollectionHome
+    },
+    ]
+  }
   ]
 })
+
+
+
+export default router

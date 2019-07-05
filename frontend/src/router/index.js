@@ -14,11 +14,14 @@ const router = new Router({
   },
   {
     path: '/collections',
-    desc: 'Collections',
+    desc: 'Twitter Collector',
+    icon: ['fab', 'twitter'],
+    color: '#00aced',
     component: Collection,
     children: [
     {
       path: 'new',
+      name: 'New Collection',
       component: CollectionCreate
     },
     {

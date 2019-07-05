@@ -1,12 +1,20 @@
 <template>
   <div id="collection-details">
-    <div id="detail-header">
+    <div id="detail-header" :class="{'selected': selected}">
       <h3>{{collection.desc ? collection.desc : collection._id}}</h3>
+      <transition name="fade">
+        <div id="collection-actions" v-show="selected" @click="collection.active_flag ? stop_collection() : run_collection()" >
+          <font-awesome-icon v-if="pending" icon="circle-notch" spin />
+          <font-awesome-icon v-else-if="collection.active_flag" icon="stop"/>
+          <font-awesome-icon v-else icon="play" />
+        </div>
+      </transition>
     </div>
     <transition name="fade">
       <div id="detail-body" v-show="selected">
-        <h4>{{collection.active_flag}}</h4>
-        <h5>{{collection.keywords}}</h5>
+        <li class="keyword" v-for="keyword in collection.keywords">
+          {{keyword}}
+        </li>
       </div>
     </transition>
   </div>
@@ -16,6 +24,7 @@
     name: 'CollectionDetails',
     data() {
       return {
+        pending: false
       }
     },
     props: ['collection', 'selected'],
@@ -25,13 +34,24 @@
         this.active = !this.active
       },
       run_collection: function() {
+        this.pending = true
         this.$store.dispatch("run_collection", {
-          id: this.$route.params.id
-        }).then()
+          id: this.collection._id
+        }).then(() => {
+          setTimeout(function () {
+            this.pending = false
+          }, 1000)
+        })
       },
       stop_collection: function() {
+        this.pending = true
+        console.log(this.pending)
         this.$store.dispatch("stop_collection")
-        .then()
+        .then(() => {
+          setTimeout(function () {
+            this.pending = false
+          }, 1000)
+        })
       }
     },
     computed: {
@@ -51,23 +71,54 @@
 }
 
 #detail-header {
+  padding: 0 30px;
   background-color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#detail-header.selected {
+  background-color: #e8e8e8;
 }
 
 #detail-body {
   background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 2%;
+  border-width: 1px;
+  border-color: #e8e8e8;
+  border-style: solid;
 }
 
-#controls {
-  margin: 0 10vw 10vh 0;
-  position: fixed;
-  right: 0;
-  bottom: 0;
+.keyword {
+  flex: 0 1 auto;
+  list-style: none;
+  border-radius: 10px;
+  margin: 20px 10px;
+  padding: 10px 15px;
+  background-color: whitesmoke;
 }
+
 .fade-enter-active {
   transition: opacity .5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+#collection-actions {
+  padding: 10px 30px;
+  border: solid 1px;
+  border-color: white;
+  border-radius: 10px;
+  filter: brightness(1);
+  color: white;
+  transition: all .2s ease-in-out;
+}
+
+#collection-actions:hover {
+  filter: brightness(.5);
 }
 </style>

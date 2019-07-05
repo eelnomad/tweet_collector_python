@@ -1,14 +1,16 @@
 <template>
     <div id="create">
-        Title: <input v-model="desc" type="text" placeholder="Default Value">
-        Capture Groups: <input v-model="new_word" @keyup.enter="add_keyword()">
+        <h1>Title:</h1>
+        <input v-model="desc" type="text" placeholder="Default Value">
+        <h2>Capture Groups:</h2>
+        <input v-model="new_word" @keyup.enter="add_keyword()">
         <div id="word-list">
             <div class="word" v-for="(keyword, index) in keywords" :key="index">
                 {{keyword}}
                 <button @click="keywords.splice(index, 1)">X</button>
             </div>
         </div>
-        <button @click="create_collection()" :disabled="keywords.length === 0">Create</button>
+        <button id="new-collection" @click="create_collection()" :disabled="keywords.length === 0">Create</button>
     </div>
 </template>
 <script>
@@ -41,7 +43,7 @@ export default {
                 keywords: this.keywords,
                 desc: this.desc.length > 0 ? this.desc : null
             }).then(response => {
-                this.$router.push({ name: 'Details', params: { id: response.data.id } })
+                this.$router.push({ name: 'Collections', params: { id: response.data.id } })
             })
         }
     },
@@ -52,7 +54,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #create {
+    flex-grow: 1;
+    padding: 5% 10%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    background-color: yellow;
+
+}
+
+#new-collection {
+
 }
 </style>

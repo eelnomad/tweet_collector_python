@@ -1,4 +1,5 @@
 import pymongo
+import datetime
 import backend.config as cfg
 from bson import ObjectId
 
@@ -12,7 +13,13 @@ def create_collection(keywords, desc=None):
     if existing:
         id = existing.get('_id')
     else:
-        id = organizer.insert_one({'keywords': normalized, 'desc': desc, 'active_flag': False}).inserted_id
+        id = organizer.insert_one(
+            {
+                'keywords': normalized,
+                'desc': desc,
+                'active_flag': False,
+                'created': datetime.datetime.utcnow()
+            }).inserted_id
         created = True
     return str(id), created
 
@@ -44,5 +51,6 @@ def get_collections():
     documents = []
     for document in organizer.find({}):
         document['_id'] = str(document.pop('_id'))
+        document['created'] = document.pop('created').timestamp()
         documents.append(document)
     return documents

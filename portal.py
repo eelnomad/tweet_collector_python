@@ -26,7 +26,6 @@ def list_collections():
 @app.route('/api/run')
 def run_collection():
     id = request.args.get('id')
-    print(id)
     if id:
         global active_stream
         if active_stream:
@@ -51,6 +50,18 @@ def stop_collection():
 def create_collection():
     id, created = mongo.create_collection(request.args.getlist('keywords[]'), request.args.get('desc'))
     return json.dumps({'id': id, 'created': created}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/api/delete')
+def delete_collection():
+    id = request.args.get('id')
+    if id:
+        result = mongo.delete_collection(id)
+        time.sleep(2)
+
+        return json.dumps({'success': result}), 200, {'ContentType': 'application/json'}
+    else:
+        return json.dumps({'success': False, 'message': 'Missing ID'}), 404, {'ContentType': 'application/json'}
 
 
 if __name__ == "__main__":

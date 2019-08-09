@@ -43,6 +43,18 @@ const actions = {
       })
     })
   },
+  delete_collection (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get('/api/delete', {
+        params: payload
+      }).then(r => {
+        context.dispatch('load_collections')
+        resolve(r)
+      }).catch(e => {
+        reject(e)
+      })
+    })
+  },
   run_collection (context, payload) {
     return new Promise((resolve, reject) => {
       axios.get('/api/run', {

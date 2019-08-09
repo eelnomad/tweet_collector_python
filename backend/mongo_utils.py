@@ -24,9 +24,16 @@ def create_collection(keywords, desc=None):
     return str(id), created
 
 
+def delete_collection(id):
+    organizer = pymongo.MongoClient(cfg.mongo.get('host'), cfg.mongo.get('port'))['twitterDB']['collectionOrganizer']
+    deleted = True if organizer.delete_one({'_id': ObjectId(id)}).deleted_count else False
+    pymongo.MongoClient(cfg.mongo.get('host'), cfg.mongo.get('port'))['twitterDB'].drop_collection(id)
+    return deleted
+
+
 def update_description(id, description):
     organizer = pymongo.MongoClient(cfg.mongo.get('host'), cfg.mongo.get('port'))['twitterDB']['collectionOrganizer']
-    organizer.update_one({'_id': id}, {'$set': {'desc': description}}, False)
+    organizer.update_one({'_id': ObjectId(id)}, {'$set': {'desc': description}}, False)
     return id
 
 

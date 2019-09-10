@@ -17,7 +17,9 @@
           <font-awesome-icon :icon="route.icon" :style="{ color: route.color}"/>
         </router-link>
       </div>
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -78,6 +80,7 @@ span {
 
 #top-nav-links {
   margin: 0 10px 0 10px;
+  cursor: pointer;
 }
 
 #top-nav {
@@ -107,5 +110,16 @@ span {
 
 .router-link-active {
   color: transparent;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .1s ease-in;
+  overflow-x: hidden;
+}
+.fade-enter {
+  z-index: -1;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

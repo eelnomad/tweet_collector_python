@@ -10,13 +10,11 @@
         </div>
       </transition>
     </div>
-    <transition name="fade">
-      <div id="detail-body" v-show="selected">
-        <li class="keyword" v-for="keyword in collection.keywords">
-          {{keyword}}
-        </li>
-      </div>
-    </transition>
+    <div id="detail-body" v-show="selected">
+      <li class="keyword" v-for="(keyword, index) in collection.keywords" :key="index">
+        {{keyword}}
+      </li>
+    </div>
   </div>
 </template>
 <script>
@@ -45,7 +43,6 @@
       },
       stop_collection: function() {
         this.pending = true
-        console.log(this.pending)
         this.$store.dispatch("stop_collection")
         .then(() => {
           setTimeout(function () {
@@ -76,6 +73,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all .5s ease;
+}
+
+#detail-header:hover, #detail-header.selected:hover {
+  background-color: lightgray;
 }
 
 #detail-header.selected {
@@ -86,7 +88,7 @@
   background-color: transparent;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 2%;
+  padding: 10px 15px;
   border-width: 1px;
   border-color: #e8e8e8;
   border-style: solid;
@@ -96,13 +98,18 @@
   flex: 0 1 auto;
   list-style: none;
   border-radius: 10px;
-  margin: 20px 10px;
+  margin: 10px 5px;
   padding: 10px 15px;
   background-color: whitesmoke;
+  transition: all .5s ease;
+}
+
+.keyword:hover {
+  background-color: lightgray;
 }
 
 .fade-enter-active {
-  transition: opacity .5s;
+  transition: opacity 0s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
@@ -113,12 +120,17 @@
   border: solid 1px;
   border-color: white;
   border-radius: 10px;
-  filter: brightness(1);
+  /*filter: brightness(1);*/
   color: white;
   transition: all .2s ease-in-out;
+  cursor: pointer;
+  width: 14px;
 }
 
 #collection-actions:hover {
-  filter: brightness(.5);
+  /*filter: brightness(.5);*/
+  background-color: gray;
+  border-color: gray;
+  color: whitesmoke;
 }
 </style>

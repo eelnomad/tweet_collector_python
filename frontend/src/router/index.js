@@ -20,14 +20,14 @@ const router = new Router({
     component: Collection,
     children: [
     {
-      path: 'new',
-      name: 'New Collection',
-      component: CollectionCreate
-    },
-    {
       path: '',
       name: 'Collections',
       component: CollectionHome
+    },
+    {
+      path: 'new',
+      name: 'New Collection',
+      component: CollectionCreate
     },
     ]
   }

@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex/dist/vuex.js'
 import axios from 'axios/dist/axios.js'
 
-axios.defaults.baseURL = 'http://localhost:5000'
+axios.defaults.baseURL = ''
 Vue.prototype.$http = axios
 
 
 Vue.use(Vuex)
 
 const state = {
-  collections: []
+  collections: null
 }
 
 const getters = {

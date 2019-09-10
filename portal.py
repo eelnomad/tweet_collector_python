@@ -1,21 +1,23 @@
 import json, time
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_cors import CORS
 import backend.mongo_utils as mongo
 import backend.twitter_utils as twitter
 
 app = Flask(__name__,
-            static_folder="frontend/dist/static",
-            template_folder="frontend/dist")
-CORS(app)
-
+            static_folder="frontend/dist/",
+            static_url_path="")
+# CORS(app)
 active_stream = None
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template('index.html')
+@app.route('/')
+def home():
+    return app.send_static_file('index.html')
+
+@app.errorhandler(404)
+def catch_all(e):
+    return redirect('/')
 
 
 @app.route('/api/list')

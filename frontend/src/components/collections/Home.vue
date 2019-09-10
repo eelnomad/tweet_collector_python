@@ -1,6 +1,11 @@
 <template>
-  <div id="home">
-    <router-link :to="'new'" append>New</router-link>
+  <div id="pending" v-if="pending">
+    <font-awesome-icon icon="circle-notch" class="fa-7x" spin />
+  </div>
+  <div id="home" v-else>
+    <router-link tag="div" :to="'new'" id="new-button" append>
+      <h3>New Collection</h3>
+    </router-link>
     <div id="active" v-if="active">
       <h2>Currently Running</h2>
       <div @click="select(active._id)">
@@ -28,9 +33,6 @@
       CollectionDetails
     },
     mounted() {
-      if (this.collections.length === 0) {
-        this.$router.push({ name: 'New Collection' })
-      }
     },
     created() {
     },
@@ -59,6 +61,9 @@
         return this.$store.getters.collections.filter(e => {
           return !e.active_flag
         })
+      },
+      pending() {
+        return this.$store.getters.collections ? false : true
       }
     },
     watch: {}
@@ -70,7 +75,35 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding: 2% 10%;
+  padding: 50px 10%;
   flex-grow: 1;
+}
+
+#pending {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+h3 {
+  line-height: 0px;
+}
+
+#new-button {
+  padding: 10px 30px;
+  border: solid 1px;
+  border-color: gray;
+  color: gray;
+  border-radius: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+  width: 145px;
+}
+
+#new-button:hover {
+  border-color: white;
+  color: white;
+  background-color: gray;
 }
 </style>
